@@ -1,0 +1,45 @@
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">Top competitors</div>
+    </div>
+    <div class="card-body">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Competitors</th>
+                    <th>RS</th>
+                    <th>MK Share</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><div class="badge rounded-fill bg-danger">1</div></td>
+                    <td>domain.com</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><div class="badge rounded-fill bg-warning">2</div></td>
+                    <td>domain.com</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><div class="badge rounded-fill bg-primary">3</div></td>
+                    <td>domain.com</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% for item in top_compatitors%}
+                <tr>
+                    <td><div class="badge rounded-fill bg-info">4</div></td>
+                    <td>domain.com</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

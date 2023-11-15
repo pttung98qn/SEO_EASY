@@ -1,0 +1,30 @@
+{% extends 'c_partials/base.html' %}
+{% load static %}
+{% block title %} Keyword Research {% endblock title %}
+
+{% block main_title %}
+
+    <div class="page-title-box mt-3">
+        <div class="row align-items-center gy-3">
+            <div class="col-md">
+                <h3 class="page-title text-capitalize fw-medium fs-2 text-center">Google keyword explorer</h3>
+                <p class="mb-0 page-sub-title"></p>
+            </div>
+            <div class="col-md-auto ms-auto">
+            </div>
+        </div>
+    </div>
+{% endblock main_title %}
+
+
+{% block content %}  
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body border-bottom">
+                {% include 'app_market_explorer/elements/search_form.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

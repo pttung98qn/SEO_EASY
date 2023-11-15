@@ -1,0 +1,42 @@
+{% extends 'c_partials/base.html' %}
+{% load static %}
+{% block title %} Dashboard {% endblock title %}
+
+{% block main_title %}
+<div class="page-title-box mt-3">
+    <div class="row align-items-center gy-3">
+        <div class="col-md">
+            <h1 class="page-title text-capitalize fw-medium fs-2 text-center">Phần mềm phân tích từ khóa</h1>
+            <p class="mb-0 page-sub-title text-center fs-5">Định hướng triển khai cho bộ từ khóa trong 1 click</p>
+        </div>
+        <div class="col-md-auto ms-auto">
+        </div>
+    </div>
+</div>
+{% endblock main_title %}
+
+
+{% block content %}  
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body border-bottom">
+                <form action="">
+                    <div class="mb-3">
+                        <label for="basiInput" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="basiInput" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea5" class="form-label">Keyword list</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea5" rows="10" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div></div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary bg-gradient form-control">Submit</button>   
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

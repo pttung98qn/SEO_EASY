@@ -1,0 +1,100 @@
+{% extends 'c_partials/base.html' %}
+{% load static %}
+{% block title %} Dashboard {% endblock title %}
+
+{% block main_title %}
+
+    <div class="page-title-box mt-1">
+        <div class="row align-items-center gy-3">
+            <div class="col-md">
+                <h1 class="page-title text-capitalize fw-medium fs-2 text-center">Phần mềm phân tích từ khóa</h1>
+                <p class="mb-0 page-sub-title text-center fs-5">Định hướng triển khai cho bộ từ khóa trong 1 click</p>
+            </div>
+            <div class="col-md-auto ms-auto">
+            </div>
+        </div>
+    </div>
+{% endblock main_title %}
+
+
+{% block content %}  
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body border-bottom">
+                <form action="/market-explorer/keyword-analysis/" class="row" method="POST">
+                    {%csrf_token%}
+                    <div class="mb-3 col-6">
+                        <label for="project_name" class="form-label">Project Name</label>
+                        <input name="project_name" type="text" class="form-control" id="project_name" required placeholder="project name">
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label for="country" class="form-label">Country</label>
+                        <select name="country" id="country" class="form-select" data-choices>
+                            {% for item in country_data%}
+                            
+                            <option {%if item.location_name == 'Vietnam' %}selected{%endif%} value="{{item.location_code}}">{{item.location_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label for="list_keyword" class="form-label">Keyword list</label>
+                        <textarea name="list_keyword" class="form-control" id="list_keyword" rows="10" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-primary bg-gradient form-control">Submit</button>   
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+        <div class="card mt-5">
+            <div class="card-body border-bottom">
+                <h2 class="text-center my-5">Analysis history</h2>
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="checkAll" value="option1">
+                                </div>
+                            </th>
+                            <th scope="col">Num</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Keywowrd count</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range_10 %}
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="checkAll" value="option1">
+                                </div>
+                            </td>
+                            <td>{{forloop.counter}}</td>
+                            <td>Name {{forloop.counter}}</td>
+                            <td>Keywowrd count {{forloop.counter}}</td>
+                            <td>Time {{forloop.counter}}</td>
+                            <td>
+                                <a href="{%url 'keyword_analysis'%}{{forloop.counter}}/" type="button" class="btn btn-primary btn-sm">View</a>
+                            </td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}

@@ -1,0 +1,198 @@
+{% extends 'c_partials/base.html' %}
+{% load static %}
+{% block title %} SERP Manage {% endblock title %}
+
+
+{% block extra_css %}
+<!-- Sweet Alert css-->
+<link href="{% static 'libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block main_title %}
+<div class="page-title-box mt-3">
+    <div class="row align-items-center gy-3">
+        <div class="col-md">
+            <h1 class="page-title text-capitalize fw-medium fs-2 text-center">Google SERP Manage</h1>
+            <p class="mb-0 page-sub-title text-center fs-5">
+                Manage SERP with SEO EASY
+            </p>
+        </div>
+        <div class="col-md-auto ms-auto">
+        </div>
+    </div>
+</div>
+{% endblock main_title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        {% include 'app_project_manage/elements/serps/serp_dashboard__summary.html'%}
+    </div>
+</div>
+<div class="d-flex mt-5 mb-3">
+    <div class="flex-grow-1"></div>
+    <div class="nav nav-pills nav-custom nav-primary bg-white p-1 rounded flex-shrink-0" role="tablist">
+        <div class="nav-link active btn btn-sm" data-bs-toggle="tab" href="#tab-project" role="tab" aria-selected="true">Project List</div>
+        <div class="nav-link btn btn-sm" data-bs-toggle="tab" href="#tab-edit" role="tab" aria-selected="false" tabindex="-1">Edit</div>
+    </div>
+</div>
+
+<div class="tab-content text-muted">
+    <div class="tab-pane active show" id="tab-project" role="tabpanel">
+        {% include 'app_project_manage/elements/serps/serp_dashboard__project.html'%}
+        {% include 'app_project_manage/elements/serps/serp_dashboard__project.html'%}
+    </div>
+    <div class="tab-pane" id="tab-edit" role="tabpanel">
+        <div class="row">
+            <div class="col-12">
+                <div  class="card">
+                    <div class="card-body">
+                        <div class="list-group col nested-list nested-sortable" id="project_list_item">
+                            <div class="list-group-item nested-1">Project 1</div>
+                            <div class="list-group-item nested-1">Project 2</div>
+                            <div class="list-group-item nested-1">Project 3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'libs/sortablejs/Sortable.min.js' %}"></script>
+<script>
+    var list_project = document.getElementById('project_list_item')
+    new Sortable(list_project, {
+        animation: 150,
+        ghostClass: 'blue-background-class'
+    });
+</script>
+<!-- Sweet Alerts js -->
+<script src="{% static 'libs/sweetalert2/sweetalert2.min.js' %}"></script>
+
+
+<script>
+$(document).ready(function() {
+    $('.project_delete_button').on("click", function() {
+        Swal.fire({
+            html:  `<div class="mt-3">
+                        <i class="bi bi-trash3 display-5 text-danger"></i>
+                        <div class="mt-4 pt-2 fs-base mx-5">
+                            <h4>Data can't not restore</h4>
+                            <p class="text-muted mx-4 mb-0">Are you Sure You want to Delete this Account ?</p>
+                        </div>
+                    </div>`,
+            showCancelButton: !0,
+            customClass: {
+                confirmButton: "btn btn-primary w-xs me-2 mb-1",
+                cancelButton: "btn btn-danger w-xs mb-1"
+            },
+            confirmButtonText: "Yes, Delete It!",
+            buttonsStyling: !1,
+            showCloseButton: !0
+        }).then(function (result) {
+            if (result.value) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success",
+                    customClass: {
+                        confirmButton: "btn btn-primary w-xs mt-2"
+                    },
+                    buttonsStyling: !1
+                })
+            }
+        });
+    });
+
+
+    $('.project_recheck_button').on('click', function(){
+        if(1==0){
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: !1,
+                timer: 1500,
+                showCloseButton: !0
+            })
+        }
+        else{
+            Swal.fire({
+                title: "Not enough credit!",
+                text: "Do you want to add more?",
+                icon: "warning",
+                customClass: {
+                    confirmButton: "btn btn-primary w-xs mt-2"
+                },
+                buttonsStyling: !1,
+                showCloseButton: !0
+            }).then(function(result){
+                console.log(result)
+            })
+        }
+    })
+
+    $('.project_share_button').on('click',function(){
+        share_table =`{%include 'app_project_manage/elements/serps/serp_dashboard__project_shared_table.html'%}`
+        Swal.fire({
+            title: "Submit email to run ajax request",
+            input: "email",
+            showCancelButton: !0,
+            confirmButtonText: "Submit",
+            showLoaderOnConfirm: !0,
+            customClass: {
+                confirmButton: "btn  btn-primary w-xs me-2",
+                cancelButton: "btn btn-danger w-xs"
+            },
+            buttonsStyling: !1,
+            showCloseButton: !0,
+            allowOutsideClick: !1,
+            preConfirm: function(){
+                console.log('oke')
+            },
+            footer: share_table,
+        }).then(function(t) {
+            if(t.isConfirmed==true){
+                if("taken@example.com" != t.value) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Share project finished!",
+                        customClass: {
+                            confirmButton: "btn btn-primary w-xs"
+                        },
+                        buttonsStyling: !1,
+                        html: "Submitted email: " + t.value
+                    })
+                }
+                else{
+                    Swal.fire({
+                        icon: "error",
+                        title: "Share project fails !",
+                        customClass: {
+                            confirmButton: "btn btn-primary w-xs"
+                        },
+                        buttonsStyling: !1,
+                        html: t.value+' is already shared'
+                    })
+                }
+            }
+        })
+    })
+})
+
+
+
+
+</script>
+
+{% endblock%}

@@ -1,0 +1,37 @@
+<!-- Default Modals -->
+<button type="button" class="btn {{btn_class}}" data-bs-toggle="modal" data-bs-target="#{{modal_id}}">{{btn_text}}</button>
+<div id="{{modal_id}}" class="modal fade" tabindex="-1" aria-labelledby="{{modal_id}}_label" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog {{model_type}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{modal_id}}_label">{{model_heading}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <div class="modal-body">
+                {%if model_body_html %}
+                    {%include model_body_html%}
+                {% else %}
+                <div class="text-center mt-5" id="{{modal_id}}_loading">
+                    <div class="spinner-border text-secondary" role="status" style="width:4rem; height: 4rem;">
+                        <span class="visually-hidden"></span>
+                    </div>
+                </div>
+                
+                {%endif %}
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="{{modal_id}}_save">Save Changes</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% comment %}
+    {%with btn_class='btn-primary btn-sm' btn_text='Edit Group' modal_id='edit_group_key_modal' model_heading='Edit Keyword Group' %}
+    {%with model_type='modal-xl' model_body_html='app_market_explorer/elements/search_form.html'%}
+        {% include 'elements/modals.html'%}
+    {%endwith%}
+    {%endwith%}
+{% endcomment %}

@@ -1,0 +1,79 @@
+<ul class="navbar-nav" id="navbar-nav">
+    <!-- <li class="nav-item">
+        <a class="nav-link menu-link " href="{% url 'dashboard'%}">
+            <i class="ph-gauge"></i> <span data-key="t-dashboards">Dashboards</span>
+        </a>
+    </li> -->
+
+    <li class="nav-item">
+        <a class="nav-link menu-link collapsed" href="#topbarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="topbarApps">
+            <i class="ph-layout"></i> <span data-key="t-project-manage">Project manager</span>
+        </a>
+        <div class="collapse menu-dropdown" id="topbarApps">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{% url 'serp_dashboard' %}" class="nav-link" data-key="t-report-ranking">Report Ranking</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link" data-key="t-onpage-manage">Onpage Manage</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link menu-link collapsed" href="" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarPages">
+            <i class="ph-address-book"></i> <span data-key="t-site-explorer">Site explorer</span>
+        </a>
+        <div class="collapse menu-dropdown" id="sidebarPages">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{% url 'pages:starter' %}" class="nav-link" data-key="t-site-overview"> Site overview </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'pages:starter' %}" class="nav-link" data-key="t-check-backlink"> Check backlink </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'pages:starter' %}" class="nav-link" data-key="t-competing-domain"> Competing Domain </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'pages:profile' %}" class="nav-link" data-key="t-batch-analytics"> Batch Analytics </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'pages:profile' %}" class="nav-link" data-key="t-bulk-traffic-history"> Bulk traffic history </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link menu-link collapsed" href="#sidebarCharts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCharts">
+            <i class="ph-chart-pie-slice"></i> <span data-key="t-market-explorer">Market explorer</span>
+        </a>
+        <div class="collapse menu-dropdown" id="sidebarCharts">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{% url 'keyword_research' %}" class="nav-link" data-key="t-keyword-research">Keyword Research</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'keyword_analysis' %}" class="nav-link" data-key="t-keyword-analytic">Keyword Analytics</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link menu-link collapsed" href="#sidebarForms" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarForms">
+            <i class="ri-file-list-3-line"></i> <span data-key="t-webiste-auditor">Website Auditor</span>
+        </a>
+        <div class="collapse menu-dropdown" id="sidebarForms">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{% url 'components:forms.elements' %}" class="nav-link" data-key="t-audit-content">Audit content</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'components:forms.select' %}" class="nav-link" data-key="t-audit-technical">Audit technical</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    
+</ul>

@@ -1,0 +1,70 @@
+{% extends 'c_partials/base.html' %}
+{% load static %}
+{% block title %} SERP Manage {% endblock title %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block main_title %}
+<div class="page-title-box">
+    <div class="d-flex align-items-center">
+        <div class="flex-grow-1 d-flex gap-2">
+            <a href="{%url 'serp_dashboard'%}" class="btn btn-light d-flex">
+                <i class="ri-arrow-left-line label-icon align-middle me-md-2"></i><span class="d-none d-md-block">Back</span>
+            </a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose project</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Project 1</a>
+                    <a class="dropdown-item" href="#">Project 2</a>
+                    <a class="dropdown-item" href="#">Project 3</a>
+                </div>
+            </div>
+        </div>
+        <div class="flex-shrink-0 d-flex gap-2">
+            <div class="btn btn-success custom-toggle d-flex">
+                <i class="ri-add-line align-bottom me-md-1"></i>
+                <span class="d-none d-md-block">Add topic</span>
+            </div>
+            <div type="button" class="btn btn-primary custom-toggle d-flex">
+                <i class="ri-settings-4-line align-bottom me-md-1"></i><span class="d-none d-md-block">Setting</span>
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-center gy-3 mt-1">
+        <div class="col-md">
+            <h1 class="page-title text-capitalize fw-medium fs-2 text-center">Project Name</h1>
+            <p class="mb-0 page-sub-title text-center fs-md align-middle">
+                <span class="px-1"><i class="ri-home-line align-bottom me-1"></i>domain.com</span>
+                <span class="px-1"><i class="ri-map-pin-line align-bottom me-1"></i>Ho Chi Minh/Viet Nam</span>
+                <span class="px-1"><i class="ri-device-line align-bottom me-1"></i>Mobile</span>
+                <span class="px-1"><i class="ri-global-line align-bottom me-1"></i>Vietnameses</span>
+                <span class="px-1"><i class="ri-search-line align-bottom me-1"></i>google.com.vn</span>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-auto ms-auto">
+    </div>
+</div>
+
+{% endblock main_title %}
+
+{% block content %}
+{% include 'app_project_manage/elements/serps/serp_project__summary.html'%}
+
+<div class="row mt-3">
+    <div class="col-lg-8 col-sm-12">
+        {% include 'app_project_manage/elements/serps/serp_project__chart.html'%}
+    </div>
+    <div class="col-lg-4 col-sm-12">
+        {% include 'app_project_manage/elements/serps/serp_project__top_competitors.html'%}
+    </div>
+</div>
+
+{% include 'app_project_manage/elements/serps/serp_project__topic.html'%}
+
+
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}
