@@ -1,0 +1,71 @@
+<form action="" class="my-3">
+    <div class="row">
+        <div class="col-xl-2 col-sm-4 mb-2">
+            <select class="form-control" data-choices data-choices-search-false name="choices-single-default" id="choices-single-default">
+                <option value="Choice 2">Relate</option>
+                <option value="Choice 1">Exact match</option>
+            </select>
+        </div>
+        <div class="col-xl-4 col-sm-8 mb-2">
+            <input type="text" class="form-control" placeholder="keyword input">
+        </div>
+        <div class="col-xl-2 col-sm-4 mb-2">
+            <select class="form-control" data-choices name="choices-single-default" id="choices-single-default">
+                <option value="">Country</option>
+                <option value="Choice 1">Choice 1</option>
+                <option value="Choice 2">Choice 2</option>
+                <option value="Choice 3">Choice 3</option>
+            </select>
+        </div>
+        <div class="col-xl-2 col-sm-4 mb-2">
+            <select class="form-control" data-choices name="choices-single-default" id="choices-single-default">
+                <option value="">Language</option>
+                <option value="Choice 1">Choice 1</option>
+                <option value="Choice 2">Choice 2</option>
+                <option value="Choice 3">Choice 3</option>
+            </select>
+        </div>
+        <div class="col-xl-2 col-sm-4 mb-2">
+            <div class="d-flex">
+                <!-- Forms Content -->
+                <!-- Clickable outside dropdown -->
+
+                <div class="btn-group">
+                    <i data-bs-auto-close="outside" class="ri-settings-4-line fs-2 me-3 text-primary btn p-0"  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xl p-4">
+                        <div class="mb-2">
+                            <label class="form-label" for="search_include">Include</label>
+                            <input data-choices data-choices-limit="5" data-choices-removeItem class="form-control" id="search_include" type="text" value="" >
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label" for="search_exclude">Exclude</label>
+                            <input data-choices data-choices-limit="5" data-choices-removeItem class="form-control" id="search_exclude" type="text" value="seo,abcs" >
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label" for="">Volume</label>
+                            <div class="d-flex gap-3">
+                                <input class="form-control" id="volume_from" type="number" value="" placeholder="from">
+                                <input class="form-control" id="volume_from" type="number" value="" placeholder="to">
+                            </div>
+                        </div>
+                        <div class="btn btn-primary float-end dropdown-menu-close">Done</div>
+                    </div>
+                </div>
+                
+
+                <button type="button" class="btn btn-success btn-label form-control">
+                    <i class="ri-search-line label-icon align-middle fs-lg me-2"></i> Search
+                </button>
+            </div>
+        </div>
+    </div> 
+</form>
+
+<script>
+    function close_dropdown(){
+        $('.dropdown-menu-close').on('click', function(){
+            $(this).closest('.dropdown-menu').prev().click()
+        })
+       
+    }
+</script>

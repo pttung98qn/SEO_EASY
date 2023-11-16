@@ -14,9 +14,12 @@ class DFAccountModel(models.Model):
 
 class DFRequestLog(models.Model):
 	end_point = models.CharField(max_length=255)
+	cost = models.FloatField()
 	task_id = models.CharField(max_length=75)
 	post_data = models.JSONField()
 	res_data = models.JSONField()
 	res_status_code = models.IntegerField()
 	status_code = models.IntegerField()
 	
+	create_time = models.DateTimeField(auto_now_add=True)
+	turnarround_time = models.IntegerField(null=True, blank=True)

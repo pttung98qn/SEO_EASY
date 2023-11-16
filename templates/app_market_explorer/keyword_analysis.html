@@ -20,38 +20,7 @@
 {% block content %}  
 <div class="row">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body border-bottom">
-                <form action="/market-explorer/keyword-analysis/" class="row" method="POST">
-                    {%csrf_token%}
-                    <div class="mb-3 col-6">
-                        <label for="project_name" class="form-label">Project Name</label>
-                        <input name="project_name" type="text" class="form-control" id="project_name" required placeholder="project name">
-                    </div>
-                    <div class="mb-3 col-6">
-                        <label for="country" class="form-label">Country</label>
-                        <select name="country" id="country" class="form-select" data-choices>
-                            {% for item in country_data%}
-                            
-                            <option {%if item.location_name == 'Vietnam' %}selected{%endif%} value="{{item.location_code}}">{{item.location_name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="list_keyword" class="form-label">Keyword list</label>
-                        <textarea name="list_keyword" class="form-control" id="list_keyword" rows="10" required></textarea>
-                    </div>
-                    <div class="row">
-                        <div class="col-3">
-                        </div>
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-primary bg-gradient form-control">Submit</button>   
-                        </div>
-                    </div>
-                    
-                </form>
-            </div>
-        </div>
+        {% include 'app_market_explorer/elements/keyword_analysis__input_form.html' %}
         <div class="card mt-5">
             <div class="card-body border-bottom">
                 <h2 class="text-center my-5">Analysis history</h2>
