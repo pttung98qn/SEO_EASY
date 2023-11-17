@@ -18,6 +18,7 @@ authentication_twostep_verification = pagesview.as_view(template_name = "pages/a
 
 # errors
 error_404 = pagesview.as_view(template_name = "pages/errors/auth-404.html")
+error_403 = pagesview.as_view(template_name = "pages/errors/auth-403.html")
 error_500 = pagesview.as_view(template_name = "pages/errors/auth-500.html")
 error_503 = pagesview.as_view(template_name = "pages/errors/auth-503.html")
 error_offline = pagesview.as_view(template_name = "pages/errors/auth-offline.html")

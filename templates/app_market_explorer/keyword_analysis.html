@@ -3,12 +3,11 @@
 {% block title %} Dashboard {% endblock title %}
 
 {% block main_title %}
-
     <div class="page-title-box mt-1">
         <div class="row align-items-center gy-3">
             <div class="col-md">
-                <h1 class="page-title text-capitalize fw-medium fs-2 text-center">Phần mềm phân tích từ khóa</h1>
-                <p class="mb-0 page-sub-title text-center fs-5">Định hướng triển khai cho bộ từ khóa trong 1 click</p>
+                <h1 class="page-title text-capitalize fw-medium fs-2 text-center">Keyword Analysis</h1>
+                <p class="mb-0 page-sub-title text-center fs-5">Group keyword, classify search intent, top competitors...</p>
             </div>
             <div class="col-md-auto ms-auto">
             </div>
@@ -24,7 +23,8 @@
         <div class="card mt-5">
             <div class="card-body border-bottom">
                 <h2 class="text-center my-5">Analysis history</h2>
-                <table class="table table-hover">
+                
+                <table class="table table-hover" id="history_table">
                     <thead class="table-light">
                         <tr>
                             <th scope="col">
@@ -40,22 +40,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for i in range_10 %}
                         <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="checkAll" value="option1">
+                            <td colspan="6">
+                                <div class="text-center p-5">
+                                    <div class="spinner-border text-primary" role="status" style="width:2rem; height: 2rem;">
+                                        <span class="visually-hidden"></span>
+                                    </div>
                                 </div>
                             </td>
-                            <td>{{forloop.counter}}</td>
-                            <td>Name {{forloop.counter}}</td>
-                            <td>Keywowrd count {{forloop.counter}}</td>
-                            <td>Time {{forloop.counter}}</td>
-                            <td>
-                                <a href="{%url 'keyword_analysis'%}{{forloop.counter}}/" type="button" class="btn btn-primary btn-sm">View</a>
-                            </td>
                         </tr>
-                        {% endfor%}
+                        
                     </tbody>
                 </table>
             </div>
@@ -65,5 +59,17 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{%static 'custom/js/common_action.js'%}"></script>
+<script src="{%static 'custom/js/table_action.js'%}"></script>
+<script src="{%static 'app_market_explorer/keyword_analysis.js'%}"></script>
 
+<script>
+    let get_history_endpoint = "{% url 'keyword_analysis_item_list' %}";
+</script>
+<script>
+    $(document).ready(function(){
+        on_change_country()
+        load_analysis_history()
+    })
+</script>
 {% endblock %}

@@ -42,6 +42,7 @@ urlpatterns = [
     path('account/', include('allauth.urls')),
 
     # App
+    path("api-connector/", include('app_api_connector.urls')),
     path('market-explorer/', include('app_market_explorer.urls')),
     path("customer/", include('app_customer.urls')),
     path("project/", include('app_project_manage.urls')),

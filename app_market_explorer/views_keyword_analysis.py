@@ -1,25 +1,31 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.views import View
 from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.db.models import Q
+from django.core.paginator import Paginator
+
 from django.urls import reverse
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
+
 from app_api_connector.dataforseo import gg_api as DF_GG_API
 
 from . import models
-from .functions import serp_config_manage, keyword_manage
+from .functions import serp_config_manage, keyword_analysis_process
 from .forms import KeywordAnalysisForm
 
 class KeywordAnalysisView(LoginRequiredMixin, View):
     def get(self, request):
-        template = 'app_market_explorer/keyword_analysis.html'
         
         context = {
-            'range_10': range(10),
             'country_data': DF_GG_API.COUNTRY_LIST,
             'language_data': DF_GG_API.get_language('2704'),
         }
+        template = 'app_market_explorer/keyword_analysis.html'
         return render(request, template_name=template, context=context)
     
     def post(self, request):
@@ -39,13 +45,36 @@ class KeywordAnalysisView(LoginRequiredMixin, View):
             serp_config = serp_config.id,
             creator = request.user
         )
-        root_key_list = keyword_manage.root_keyword_create(list_keyword)
-        return JsonResponse({'status':'success'})
-    
+        keyword_analysis_process.run_analytics(list_keyword, ka_obj, request.user, serp_config)
+        return redirect(reverse('keyword_analysis_item', args=[ka_obj.id]))
+
+
+def get_ka_project(request):
+    project_qs = models.KeywordAnalysisModel.objects.filter(creator=request.user)
+    data = project_qs.values('id','name','create_time','project')
+
+    page = request.GET.get('page', 1)
+    items_per_page = 5
+    paginator = Paginator(data, items_per_page)
+    page_obj = paginator.get_page(page)
+
+    template = 'app_market_explorer/elements/keyword_analysis__history.html'
+    result_data = render_to_string(template, context = {'data':page_obj})
+    return JsonResponse({'result_data':result_data, 'total_count':paginator.count, 'current_count': len(page_obj.object_list)})
+
 class KeywordAnalysisResultView(LoginRequiredMixin, View):
     def get(self, request, id):
-        template = 'app_market_explorer/keyword_analysis_result.html'
+        try:
+            project_obj = models.KeywordAnalysisModel.objects.get(id=id)
+        except:
+            raise Http404()
+        if project_obj.creator != request.user:
+            raise PermissionDenied
+        
+        project_qs = models.KeywordAnalysisModel.objects.filter(creator=request.user).only('id','name')
         context = {
+            'obj': project_obj,
+            'project_qs':project_qs,
             'range_10': range(10),
             'competitors':[{
                     'domain':'domain1.com',
@@ -99,5 +128,6 @@ class KeywordAnalysisResultView(LoginRequiredMixin, View):
                 }
             ]
         }
+        template = 'app_market_explorer/keyword_analysis_result.html'
         return render(request, template_name=template, context=context)
 

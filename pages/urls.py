@@ -12,6 +12,7 @@ from pages.views import (
     
     # errors
     error_404,
+    error_403,
     error_500,
     error_503,
     error_offline,
@@ -46,8 +47,10 @@ urlpatterns = [
     
     # errors
     path('errors/error_404',view=error_404,name='errors.error_404'),
+    path('errors/error_403',view=error_403,name='errors.error_403'),
     path('errors/error_500',view=error_500,name='errors.error_500'),
     path('errors/error_503',view=error_503,name='errors.error_503'),
+    
     path('errors/offline',view=error_offline,name='errors.offline'),
    
     

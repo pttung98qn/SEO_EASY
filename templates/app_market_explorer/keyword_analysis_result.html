@@ -3,28 +3,50 @@
 {% block title %} Dashboard {% endblock title %}
 
 {% block main_title %}
-
-	<div class="page-title-box mt-1">
-		<div class="row align-items-center gy-3">
-			<div class="col-md">
-				<h1 class="page-title text-capitalize fw-medium fs-2xl">Nhóm key 1</h1>
-			</div>
-			<div class="col-md-auto ms-auto">
-				<div class="customizer-setting d-none d-md-block">
-					<button type="button" class="btn btn-success btn-label">
-						<i class="ri-add-line label-icon align-middle fs-lg me-2"></i> Add new
-					</button>
+<div class="page-title-box">
+	<div class="d-flex align-items-center">
+		<div class="flex-grow-1 d-flex gap-2">
+			<a href="{%url 'keyword_analysis'%}" class="btn btn-light d-flex">
+				<i class="ri-arrow-left-line label-icon align-middle me-md-2"></i><span class="d-none d-md-block">Back</span>
+			</a>
+			<div class="btn-group">
+				<button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose project</button>
+				<div class="dropdown-menu">
+					{% for item in project_qs %}
+						<a class="dropdown-item" href="{%url 'keyword_analysis_item' item.id %}">{{item.name}}</a>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
+		<div class="flex-shrink-0 d-flex gap-2">
+			<a href="{%url 'keyword_analysis'%}" class="btn btn-success custom-toggle d-flex">
+				<i class="ri-add-line align-bottom me-md-1"></i>
+				<span class="d-none d-md-block">Add new</span>
+			</a>
+			<div type="button" class="btn btn-primary custom-toggle d-flex">
+				<i class="ri-settings-4-line align-bottom me-md-1"></i><span class="d-none d-md-block">More keyword</span>
+			</div>
+		</div>
 	</div>
+	<div class="row align-items-center gy-3 mt-1">
+		<div class="col-md">
+			<h1 class="page-title text-capitalize fw-medium fs-2 text-center">Project Name</h1>
+			<p class="mb-0 page-sub-title text-center fs-md align-middle">
+				<span class="px-1"><i class="ri-map-pin-line align-bottom me-1"></i>Viet Nam</span>
+				<span class="px-1"><i class="ri-global-line align-bottom me-1"></i>Vietnameses</span>
+			</p>
+		</div>
+	</div>
+	<div class="col-md-auto ms-auto">
+	</div>
+</div>
 {% endblock main_title %}
 
 
 {% block content %}  
-<div class="row">
+<div class="row mt-5">
 	<div class="col-lg-3 col-sm-6">
-		<div class="card">
+		<div class="card shadow-lg">
 			<div class="card-body">
 				<h6 class="text-success fs-xs float-end mb-0">
 				</h6>
@@ -36,7 +58,7 @@
 		</div>
 	</div><!--end col-->
 	<div class="col-lg-3 col-sm-6">
-		<div class="card">
+		<div class="card shadow-lg">
 			<div class="card-body">
 				<h5 class="text-success fs-xs float-end mb-0">
 				</h5>
@@ -49,7 +71,7 @@
 		</div>
 	</div><!--end col-->
 	<div class="col-lg-3 col-sm-6">
-		<div class="card">
+		<div class="card shadow-lg">
 			<div class="card-body">
 				<h6 class="text-danger fs-xs float-end mb-0">
 				</h6>
@@ -61,7 +83,7 @@
 		</div>
 	</div><!--end col-->
 	<div class="col-lg-3 col-sm-6">
-		<div class="card">
+		<div class="card shadow-lg">
 			<div class="card-body">
 				<h6 class="text-danger fs-xs float-end mb-0">
 				</h6>

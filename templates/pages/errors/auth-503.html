@@ -1,4 +1,27 @@
+{% extends 'account/account_base.html' %}
 {% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block title %}503 Error{% endblock title %}
+    
+{% block content %}
+<div class="col-xxl-6 mx-auto">
+    <div class="card mb-0 border-0 shadow-none mb-0">
+        <div class="card-body p-sm-5 m-lg-4">
+            <div class="error-img text-center px-5">
+                <img src="https://img.themesbrand.com/judia/auth/503.png" class="img-fluid" alt="">
+            </div>
+            <div class="mt-4 text-center pt-4">
+                <div class="position-relative">
+                    <h4 class="fs-2xl error-subtitle text-uppercase mb-0">The server is under maintenance</h4>
+                    <p class="fs-base text-muted mt-3">The server is under maintenance, try again later!</p>
+                </div>
+            </div>
+        </div><!-- end card body -->
+    </div><!-- end card -->
+</div>
+{% endblock content %}
+
 <!doctype html>
 <html lang="en" data-layout-width="boxed" data-topbar="dark" data-preloader="disable" data-card-layout="borderless" data-bs-theme="light" data-topbar-image="pattern-1">
 <head>

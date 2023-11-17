@@ -2,19 +2,21 @@
 {% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
-{% block title %}403 ERROR - Page does not exist anymore{% endblock title %}
+{% block title %}403 ERROR - You don't have permission to access this page{% endblock title %}
     
 {% block content %}
 <div class="col-xxl-6 mx-auto">
     <div class="card mb-0 border-0 shadow-none mb-0">
         <div class="card-body p-sm-5 m-lg-4">
             <div class="error-img text-center px-5">
-                <img src="https://img.themesbrand.com/judia/auth/404.png" class="img-fluid" alt="">
+                <div class="text-warning fs-1">
+                    403 ERROR
+                </div>
             </div>
             <div class="mt-4 text-center pt-3">
                 <div class="position-relative">
-                    <h4 class="fs-2xl error-subtitle text-uppercase mb-0 text-danger">Opps, page not found</h4>
-                    <p class="fs-base text-muted mt-3">This page does not exist or deleted</p>
+                    <h4 class="fs-2xl error-subtitle text-uppercase mb-0">Opps, No Permission</h4>
+                    <p class="fs-base text-muted mt-3">You don't have permission to access this page</p>
                     <div class="mt-4">
                         <a href="{% url 'home' %}" class="btn btn-primary"><i class="bi bi-house me-1"></i>Back to home</a>
                     </div>

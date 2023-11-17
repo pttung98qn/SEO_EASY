@@ -49,8 +49,12 @@ for line in LOCATION_LIST:
 		})
 	
 def get_language(country_code):
-	data = LANGUAGE_LOCATION_DICT[country_code]['available_languages']
-	data = sorted(data, key=lambda d: d['keywords'], reverse=True)
+	country_code = str(country_code)
+	if country_code in LANGUAGE_LOCATION_DICT:
+		data = LANGUAGE_LOCATION_DICT[country_code]['available_languages']
+		data = sorted(data, key=lambda d: d['keywords'], reverse=True)
+	else:
+		data = []
 	return data
 
 def get_sub_location(country_code):

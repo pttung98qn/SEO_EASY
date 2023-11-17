@@ -37,8 +37,17 @@ class KeywordAnalysisModel(models.Model):
 
 class Keyword_KA_Model(models.Model):
 	analytics_group = models.ForeignKey(KeywordAnalysisModel, on_delete=models.CASCADE)
-	on_check_serp = models.BooleanField(default=False)
+
+	volume = models.IntegerField(null=True, blank=True)
+	serp = models.IntegerField(null=True, blank=True)
+	kd = models.IntegerField(null=True, blank=True)
+	volume_history = models.JSONField(null=True, blank=True)
 	root = models.CharField(max_length=125)
+
+	last_update_kd = models.DateTimeField(null=True, blank=True)
+	last_update_volume = models.DateTimeField(null=True, blank=True)
+	last_update_serp = models.DateTimeField()
+
 	creator = models.ForeignKey(User, on_delete=models.CASCADE)
 	create_time = models.DateTimeField(auto_now_add=True)
 
@@ -67,6 +76,20 @@ class KeywordVolumeModel(models.Model):
 		verbose_name = 'Keyword Info'
 	def __str__(self):
 		return self.keyword.keyword
+
+class VolumeOrderModel(models.Model):
+	from_action = models.CharField(max_length=75)
+	id_main = models.IntegerField()
+	list_obj = models.JSONField()
+	order_count = models.IntegerField()
+	get_from_date = models.CharField(default='2022-06-30', max_length=15)
+	creator = models.ForeignKey(User, on_delete=models.CASCADE)
+	create_time = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		verbose_name = 'Volume Order'
+	def __str__(self):
+		return f'{self.from_action}__{self.id_main}'
 
 class KeywordKDModel(models.Model):
 	keyword = models.ForeignKey(KeywordRootModel, on_delete=models.CASCADE)
