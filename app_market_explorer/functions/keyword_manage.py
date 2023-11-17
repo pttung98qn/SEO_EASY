@@ -25,7 +25,6 @@ def root_keyword_create(list_keyword):
 		)
 		list_new_obj.append(new_key)
 
-	new_qs = models.KeywordRootModel.objects.bulk_create(list_new_obj)
-	full_qs = new_qs.union(exist_key_qs)
-	return full_qs
+	models.KeywordRootModel.objects.bulk_create(list_new_obj)
+	return set_keyword
 			

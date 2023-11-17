@@ -47,9 +47,28 @@
         {% endblock pattern %}
     
         <div class="main-content">
-
             <div class="page-content">
                 <div class="container-fluid">
+                    <!--  -->
+                    {% block messages %}
+                    <div class="messagelist fixed-top mt-5 me-lg-5 me-md-3">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-5"></div>
+                            <div class="col-lg-6 col-md-7">
+
+                                {% if messages %}
+                                    {% for message in messages %}
+                                    {{message.extra_tags}}
+                                    <div class="alert alert-border-left {% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                                        {{ message|capfirst }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    {% endfor %}
+                                {% endif %}                               
+                            </div>
+                        </div>
+                    </div>
+                    {% endblock messages %}
 
                 {% block main_title %}
 

@@ -15,6 +15,8 @@ def user_signed_up_handler(sender, request, user, **kwargs):
 
 @receiver(user_logged_in)
 def user_logged_in_callback(sender, request, user, **kwargs):
+    if '/admin/' in request.get_full_path():
+        return 0
     ip = user_info.get_client_ip(request)
     models.LoginLogModel.objects.create(
         user=user,

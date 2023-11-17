@@ -20,8 +20,7 @@ def serp_config(country, location, device, language_code, se_domain):
         )
         return new_config
 
-def keyword_analytics_config(country):
-    language_code = DF_GG_API.get_language(country)[0]
+def keyword_analytics_config(country, language_code):
     device = 'mb'
     se_domain = 'google.com'
     location = None
