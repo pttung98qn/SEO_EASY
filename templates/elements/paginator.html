@@ -1,0 +1,5 @@
+{% if paginator.num_pages <= 5 %}
+{% for item in paginator.page_range %}
+{{item}}
+{% endfor %}
+{% endif %}

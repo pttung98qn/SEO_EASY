@@ -1,0 +1,78 @@
+{% extends 'c_partials/base.html' %}
+{% load static %}
+{% block title %} Keyword Research - {{obj.keyword}} {% endblock title %}
+
+{% block main_title %}
+<div class="page-title-box">
+	<div class="row align-items-center gy-3">
+		<div class="col-md">
+			<h1 class="page-title text-capitalize fw-medium fs-2">{{obj.keyword}}</h1>
+			<p class="mb-0 page-sub-title fs-md align-middle">
+				<span class="px-1"><i class="ri-map-pin-line align-bottom me-1"></i>{{obj.config.get_country_code_display}}</span>
+				<span class="px-1"><i class="ri-global-line align-bottom me-1"></i>{{obj.config.get_language_code_display}}</span>
+                <span class="px-1"><i class="ri-money-dollar-circle-line align-bottom me-1"></i>{%if obj.credit%}{{obj.credit}}{%else%}0{%endif%}</span>
+			</p>
+		</div>
+	</div>
+	<div class="col-md-auto ms-auto">
+	</div>
+</div>
+
+{% endblock main_title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="text-success fs-xs float-end mb-0">
+                   Trend <i class="ri-arrow-right-up-line fs-sm align-middle"></i> +19.07 %
+                </h5>
+                <div>
+                    <p class="text-uppercase fw-medium text-muted text-truncate fs-sm">Total Volume</p>
+                    <h4 class="fw-semibold mb-3"><span class="counter-value" data-target="750">0</span>K</h4>
+                </div>
+                <div id="total_earnings" data-colors="[&quot;--tb-info&quot;]" class="apex-charts" dir="ltr" style="min-height: 70px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="text-danger fs-xs float-end mb-0">
+                </h6>
+                <div>
+                    <p class="text-uppercase fw-medium text-muted text-truncate fs-sm">Keyword Dificute</p>
+                </div>
+                <div id="average_daily_sales" data-colors="[&quot;--tb-secondary&quot;]" class="apex-charts" dir="ltr" style="min-height: 111px;">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{%static 'custom/js/common_action.js'%}"></script>
+<script src="{%static 'app_market_explorer/keyword_research.js'%}"></script>
+<script>
+    $(document).ready(function(){
+        close_dropdown()
+        on_change_country()
+        research_submit()
+    })
+</script>
+{% endblock %}

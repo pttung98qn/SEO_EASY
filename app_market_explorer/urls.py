@@ -3,7 +3,7 @@ from django.urls import path
 
 urlpatterns = [
     path('keyword-research/', views_keyword_research.KeywordResearchView.as_view(), name='keyword_research'),
-
+    path('keyword-research/<int:id>/', views_keyword_research.keyword_research_result_view, name='keyword_research_result'),
 
     path('keyword-analysis/', views_keyword_analysis.KeywordAnalysisView.as_view(), name='keyword_analysis'),
     path('keyword-analysis-item-list/', views_keyword_analysis.get_ka_project, name='keyword_analysis_item_list'),

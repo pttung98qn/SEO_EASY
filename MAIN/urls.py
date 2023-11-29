@@ -47,4 +47,6 @@ urlpatterns = [
     path("customer/", include('app_customer.urls')),
     path("project/", include('app_project_manage.urls')),
     
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]

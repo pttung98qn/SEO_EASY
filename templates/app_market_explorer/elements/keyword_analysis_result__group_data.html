@@ -1,0 +1,65 @@
+<table class="table" id="group_keyword_table">
+    <thead class="table-light">
+        <tr>
+            <th scope="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="">
+                </div>
+            </th>
+            <th scope="col">No</th>
+            <th scope="col">Main key</th>
+            <th scope="col">Keyword count</th>
+            <th scope="col">Total volume</th>
+            <th scope="col">Content type</th>
+            <th scope="col">KD</th>
+            <th scope="col">Word count</th>
+            <th scope="col" style="width: 80px;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in range_10 %}
+        <tr>
+            <td>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="">
+                </div>
+                
+            </td>
+            <td>{{forloop.counter}}</td>
+            <td>Có 1 từ khoá chính dài thòn lòn dài lắm luôn ak {{forloop.counter}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                {%if i == 0 %}
+                    <span class="badge bg-success">20</span>
+                {% elif i == 1 %}
+                    <span class="badge bg-warning">40</span>
+                {% elif i == 2 %}
+                    <span class="badge bg-danger">90</span>
+                {% endif %}
+            </td>
+            <td></td>
+            <td>
+                {%if i == 3 %}
+                    <span class="btn btn-info badge form-control">View</span>
+                {%elif i == 5 %}
+                    <button disabled class="btn btn-success badge form-control">
+                        <div class="spinner-border spinner-grow" role="status" style="width:0.5rem; height: 0.5rem;">
+                            <span class="visually-hidden"></span>
+                        </div>
+                        <div class="spinner-border spinner-grow" role="status" style="width:0.5rem; height: 0.5rem;">
+                            <span class="visually-hidden"></span>
+                        </div>
+                        <div class="spinner-border spinner-grow" role="status" style="width:0.5rem; height: 0.5rem;">
+                            <span class="visually-hidden"></span>
+                        </div>
+                    </button>
+                {% else %}
+                    <span class="btn btn-success badge form-control">Onpage</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -48,13 +48,18 @@ for line in LOCATION_LIST:
 			"country_iso_code": line['country_iso_code'],
 		})
 	
-def get_language(country_code):
+def get_language(country_code, all_option=False):
 	country_code = str(country_code)
 	if country_code in LANGUAGE_LOCATION_DICT:
 		data = LANGUAGE_LOCATION_DICT[country_code]['available_languages']
 		data = sorted(data, key=lambda d: d['keywords'], reverse=True)
 	else:
 		data = []
+	if all_option and len(data)>=2:
+		data.insert(0, {
+			'language_name':'All',
+			'language_code':'',
+		})
 	return data
 
 def get_sub_location(country_code):
@@ -118,9 +123,6 @@ def volume_api(order, keyword_list, tag, location_code, date_from):
 	res = requests.post(end_point, json = post_data, auth = default_auth)
 	return res
 
-
-
-
 def getback_data(task_id, api_name, option=None):
 	'''
 		task_id (str):
@@ -150,3 +152,34 @@ def get_tasks_ready(api_name):
 	res = requests.get(end_point, auth = default_auth)
 	return res
 
+
+DEFAULT_LIMIT = 1000
+def keyword_suggestions(keyword, include_seed_keyword=True, exact_match=False, location_code = 2704, language_code = None, include_serp_info = False, limit=DEFAULT_LIMIT, filters=None, order_by=None, offset=0):
+	'''
+		target (string): target domain, the domain name of the target website, the domain should be specified without https:// or www.
+		location_code (integer): unique location identifier
+		filters (list): array of results filtering parameters. You can add several filters at once (8 filters maximum). For more information about filters, https://docs.dataforseo.com/v3/dataforseo_labs/filters/
+		default rule (list): ["relevance,desc"]
+	'''
+	end_point = "https://api.dataforseo.com/v3/dataforseo_labs/google/keyword_suggestions/live"
+	if language_code and language_code!='':
+		language_code = None
+	post_data = dict()
+	post_data[0] = dict(
+		keyword=keyword,
+		include_seed_keyword = include_seed_keyword,
+		exact_match = exact_match,
+		location_code = location_code,
+		language_code = language_code if language_code!='' else None,
+		include_serp_info = include_serp_info,
+		limit = limit,
+		offset = offset,
+		filters = filters,
+		order_by = order_by,
+	)
+	
+	for i in range(2):
+		res = requests.post(end_point, json = post_data, auth = default_auth)
+		if res.status_code==200:
+			return res
+	return res

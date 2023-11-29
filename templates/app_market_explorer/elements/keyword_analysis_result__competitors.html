@@ -1,0 +1,40 @@
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Top</th>
+            <th scope="col">Competitors</th>
+            <th scope="col">Traffic</th>
+            <th scope="col">Market share</th>
+            <th scope="col">
+                <span data-bs-toggle="tooltip"
+                    data-bs-html="true"
+                    selector=true
+                    title="<a href='#'>This is link to some source page</a>">DT</span>
+            </th>
+            <th scope="col">Domain backlink</th>
+            <th scope="col">Domain Refferal</th>
+            <th scope="col" style="width: 80px;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in competitors %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            
+            <td>{{item.domain}}</td>
+            <td>{{item.traffic_estimate}}</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar bg-secondary" role="progressbar" style="width: {{item.mk_share_p}}%;" aria-valuenow="{{item.mk_share}}" aria-valuemin="0" aria-valuemax="100">{{item.mk_share}}%</div>
+                </div>
+            </td>
+            <td>{{item.domain_traffic}}</td>
+            <td>{{item.domain_backlink}}</td>
+            <td>{{item.domain_backlink}}</td>
+            <td>
+                <span class="btn btn-success badge">Check</span>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

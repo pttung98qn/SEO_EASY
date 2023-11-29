@@ -1,0 +1,6 @@
+.table .sort.asc::before{
+    color:#b6b6b6;
+}
+.table .sort.desc::after{
+    color:#b6b6b6;
+}

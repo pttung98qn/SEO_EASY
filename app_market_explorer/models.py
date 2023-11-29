@@ -24,8 +24,12 @@ class SerpConfigModel(models.Model):
 	
 class KeywordAnalysisModel(models.Model):
 	name = models.CharField(max_length=125)
+
+	status = models.CharField(max_length=25, default='running') #running/ done/ error
+
 	project = models.IntegerField(null=True, blank=True)
-	serp_config = models.IntegerField()
+	keyword_count = models.IntegerField(default=0)
+	serp_config = models.ForeignKey(SerpConfigModel, on_delete=models.PROTECT)
 	summary = models.JSONField(null=True, blank=True)
 	creator = models.ForeignKey(User, on_delete=models.CASCADE)
 	create_time = models.DateTimeField(auto_now_add=True)
@@ -46,7 +50,7 @@ class Keyword_KA_Model(models.Model):
 
 	last_update_kd = models.DateTimeField(null=True, blank=True)
 	last_update_volume = models.DateTimeField(null=True, blank=True)
-	last_update_serp = models.DateTimeField()
+	last_update_serp = models.DateTimeField(null=True, blank=True)
 
 	creator = models.ForeignKey(User, on_delete=models.CASCADE)
 	create_time = models.DateTimeField(auto_now_add=True)
@@ -77,20 +81,6 @@ class KeywordVolumeModel(models.Model):
 	def __str__(self):
 		return self.keyword.keyword
 
-class VolumeOrderModel(models.Model):
-	from_action = models.CharField(max_length=75)
-	id_main = models.IntegerField()
-	list_obj = models.JSONField()
-	order_count = models.IntegerField()
-	get_from_date = models.CharField(default='2022-06-30', max_length=15)
-	creator = models.ForeignKey(User, on_delete=models.CASCADE)
-	create_time = models.DateTimeField(auto_now_add=True)
-
-	class Meta:
-		verbose_name = 'Volume Order'
-	def __str__(self):
-		return f'{self.from_action}__{self.id_main}'
-
 class KeywordKDModel(models.Model):
 	keyword = models.ForeignKey(KeywordRootModel, on_delete=models.CASCADE)
 	config = models.ForeignKey(SerpConfigModel, on_delete=models.PROTECT)
@@ -103,7 +93,7 @@ class KeywordKDModel(models.Model):
 	def __str__(self):
 		return self.keyword.keyword
 
-class SerpModel(models.Model):
+class KeywordSerpModel(models.Model):
 	task_id = models.CharField(max_length=45)
 	config = models.ForeignKey(SerpConfigModel, on_delete=models.PROTECT)
 	push = models.BooleanField(default=False)
@@ -133,3 +123,94 @@ class DomainModel(models.Model):
 		verbose_name = 'Domain'
 	def __str__(self):
 		return self.domain
+	
+
+class KDOrderModel(models.Model):
+	from_action = models.CharField(max_length=75)
+	id_main = models.IntegerField()
+
+	status = models.CharField(default='created', max_length=15) #created / pushed / done / error
+	
+	list_obj = models.JSONField()
+	order_count = models.IntegerField()
+	creator = models.ForeignKey(User, on_delete=models.CASCADE)
+	create_time = models.DateTimeField(auto_now_add=True)
+
+class VolumeOrderModel(models.Model):
+	from_action = models.CharField(max_length=75)
+	id_main = models.IntegerField()
+
+	status = models.CharField(default='created', max_length=15) #created / pushed / done / error
+
+	list_obj = models.JSONField()
+	order_count = models.IntegerField()
+	get_from_date = models.CharField(default='2022-06-30', max_length=15)
+	creator = models.ForeignKey(User, on_delete=models.CASCADE)
+	create_time = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		verbose_name = 'Volume Order'
+	def __str__(self):
+		return f'{self.from_action}__{self.id_main}'
+
+class SERPOrderModel(models.Model):
+	from_action = models.CharField(max_length=75)
+	id_main = models.IntegerField()
+
+	status = models.CharField(default='created', max_length=15) #created / pushed / done / error
+
+	list_obj = models.JSONField()
+	order_count = models.IntegerField()
+	creator = models.ForeignKey(User, on_delete=models.CASCADE)
+	create_time = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		verbose_name = 'SERP Order'
+	def __str__(self):
+		return f'{self.from_action}__{self.id_main}'
+
+class KeywordResearchOrderModel(models.Model):
+	keyword = models.CharField(max_length=80)
+	config = models.ForeignKey(SerpConfigModel, on_delete=models.PROTECT)
+	
+	filter_include = models.TextField(null=True, blank=True)
+	filter_exclude = models.TextField(null=True, blank=True)
+	filter_volume_min = models.IntegerField(null=True, blank=True)
+	filter_volume_max = models.IntegerField(null=True, blank=True)
+
+	status = models.CharField(default='created', max_length=15) #created / pushed / done / error
+	request_num = models.IntegerField(default=0)
+	total_count = models.IntegerField(default=0)
+	total_result = models.IntegerField(default=0)
+	total_cost = models.IntegerField(default=0)
+	total_credit = models.IntegerField(default=0)
+
+	cache_total_vol = models.IntegerField(null=True, blank=True)
+	cache_total_prev_vol = models.IntegerField(null=True, blank=True)
+	cache_vol_history = models.JSONField(null=True, blank=True)
+	cache_kd = models.CharField(max_length=25)
+
+	creator = models.ForeignKey(User, on_delete=models.CASCADE)
+	create_time = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		verbose_name = 'Keyword research Order'
+	def __str__(self):
+		return f'{self.keyword}__{self.config.id}'
+	
+class Keyword_RS_Model(models.Model):
+	keyword = models.ForeignKey(KeywordRootModel, on_delete=models.CASCADE)
+	order = models.ForeignKey(KeywordResearchOrderModel, on_delete=models.CASCADE)
+	offset = models.IntegerField(default=0)
+	
+	volume = models.IntegerField(null=True, blank=True)
+	serp = models.IntegerField(null=True, blank=True)
+	kd = models.IntegerField(null=True, blank=True)
+	volume_history = models.JSONField(null=True, blank=True)
+
+	create_time = models.DateTimeField(auto_now_add=True)
+	
+	class Meta:
+		verbose_name = 'Keyword RS'
+	def __str__(self):
+		return self.keyword.keyword

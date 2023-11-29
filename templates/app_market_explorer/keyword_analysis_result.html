@@ -3,98 +3,12 @@
 {% block title %} Dashboard {% endblock title %}
 
 {% block main_title %}
-<div class="page-title-box">
-	<div class="d-flex align-items-center">
-		<div class="flex-grow-1 d-flex gap-2">
-			<a href="{%url 'keyword_analysis'%}" class="btn btn-light d-flex">
-				<i class="ri-arrow-left-line label-icon align-middle me-md-2"></i><span class="d-none d-md-block">Back</span>
-			</a>
-			<div class="btn-group">
-				<button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose project</button>
-				<div class="dropdown-menu">
-					{% for item in project_qs %}
-						<a class="dropdown-item" href="{%url 'keyword_analysis_item' item.id %}">{{item.name}}</a>
-					{% endfor %}
-				</div>
-			</div>
-		</div>
-		<div class="flex-shrink-0 d-flex gap-2">
-			<a href="{%url 'keyword_analysis'%}" class="btn btn-success custom-toggle d-flex">
-				<i class="ri-add-line align-bottom me-md-1"></i>
-				<span class="d-none d-md-block">Add new</span>
-			</a>
-			<div type="button" class="btn btn-primary custom-toggle d-flex">
-				<i class="ri-settings-4-line align-bottom me-md-1"></i><span class="d-none d-md-block">More keyword</span>
-			</div>
-		</div>
-	</div>
-	<div class="row align-items-center gy-3 mt-1">
-		<div class="col-md">
-			<h1 class="page-title text-capitalize fw-medium fs-2 text-center">Project Name</h1>
-			<p class="mb-0 page-sub-title text-center fs-md align-middle">
-				<span class="px-1"><i class="ri-map-pin-line align-bottom me-1"></i>Viet Nam</span>
-				<span class="px-1"><i class="ri-global-line align-bottom me-1"></i>Vietnameses</span>
-			</p>
-		</div>
-	</div>
-	<div class="col-md-auto ms-auto">
-	</div>
-</div>
+{% include 'app_market_explorer/elements/keyword_analysis_result__title.html'%}
 {% endblock main_title %}
 
 
 {% block content %}  
-<div class="row mt-5">
-	<div class="col-lg-3 col-sm-6">
-		<div class="card shadow-lg">
-			<div class="card-body">
-				<h6 class="text-success fs-xs float-end mb-0">
-				</h6>
-				<div>
-					<p class="text-uppercase fw-medium text-muted text-truncate fs-sm">Total keyword</p>
-					<h4 class="fw-semibold mb-3"><span class="counter-value" data-target="1250">0</span></h4>
-				</div>
-			</div>
-		</div>
-	</div><!--end col-->
-	<div class="col-lg-3 col-sm-6">
-		<div class="card shadow-lg">
-			<div class="card-body">
-				<h5 class="text-success fs-xs float-end mb-0">
-				</h5>
-				<div>
-					<p class="text-uppercase fw-medium text-muted text-truncate fs-sm">Total group</p>
-					<h4 class="fw-semibold mb-3"><span class="counter-value" data-target="367">0</span></h4>
-				</div>
-				<div id="total_earnings" data-colors='["--tb-info"]' class="apex-charts" dir="ltr"></div>
-			</div>
-		</div>
-	</div><!--end col-->
-	<div class="col-lg-3 col-sm-6">
-		<div class="card shadow-lg">
-			<div class="card-body">
-				<h6 class="text-danger fs-xs float-end mb-0">
-				</h6>
-				<div>
-					<p class="text-uppercase fw-medium text-muted text-truncate fs-sm">Total volume</p>
-					<h4 class="fw-semibold mb-3"><span class="counter-value" data-target="470">0</span>K</h4>
-				</div>
-			</div>
-		</div>
-	</div><!--end col-->
-	<div class="col-lg-3 col-sm-6">
-		<div class="card shadow-lg">
-			<div class="card-body">
-				<h6 class="text-danger fs-xs float-end mb-0">
-				</h6>
-				<div>
-					<p class="text-uppercase fw-medium text-muted text-truncate fs-sm">KD</p>
-					<h4 class="fw-semibold mb-3"><span class="counter-value" data-target="35">0</span> </h4>
-				</div>
-			</div>
-		</div>
-	</div><!--end col-->
-</div><!--end row-->
+{% include 'app_market_explorer/elements/keyword_analysis_result__summary.html'%}
 <div class="row">
 	<div class="col-12">
 		<div class="card">
@@ -118,7 +32,6 @@
 			</div>
 			<div class="card-body">
 				<div id="content_type_chart">
-
 				</div>
 			</div>
 		</div>
@@ -132,42 +45,7 @@
 				</div>
 			</div>
 			<div class="card-body">
-				<table class="table table-sm">
-					<thead>
-						<tr>
-							<th scope="col">Top</th>
-							<th scope="col">Competitors</th>
-							<th scope="col">Traffic</th>
-							<th scope="col">Market share</th>
-							<th scope="col">Domain traffic</th>
-							<th scope="col">Domain backlink</th>
-							<th scope="col">Domain Refferal</th>
-							<th scope="col" style="width: 80px;">Action</th>
-						</tr>
-						
-					</thead>
-					<tbody>
-						{% for item in competitors %}
-						<tr>
-							<td>{{forloop.counter}}</td>
-							
-							<td>{{item.domain}}</td>
-							<td>{{item.traffic_estimate}}</td>
-							<td>
-								<div class="progress">
-									<div class="progress-bar bg-secondary" role="progressbar" style="width: {{item.mk_share_p}}%;" aria-valuenow="{{item.mk_share}}" aria-valuemin="0" aria-valuemax="100">{{item.mk_share}}%</div>
-								</div>
-							</td>
-							<td>{{item.domain_traffic}}</td>
-							<td>{{item.domain_backlink}}</td>
-							<td>{{item.domain_backlink}}</td>
-							<td>
-								<span class="btn btn-success badge">Check</span>
-							</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+				{% include 'app_market_explorer/elements/keyword_analysis_result__competitors.html'%}
 			</div>
 		</div>
 	</div>
@@ -182,7 +60,8 @@
 				<div id="kd_chart" data-colors='["--tb-primary", "--tb-light"]' class="apex-charts ms-n3" dir="ltr"></div>
 			</div>
 		</div>
-
+	</div>
+	<div class="col-sm-12 col-xl-8">
 		<div class="card">
 			<div class="card-header">
 				<h2 class="card-title">Rerp Result</h2>
@@ -192,107 +71,43 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-12 col-xl-8">
-		<div class="card">
-			<div class="card-header d-flex align-items-center flex-wrap gap-3">
-				<h2 class="card-title mb-0 flex-grow-1">Keyword grouping</h2>
-				<div class="flex-shrink-0">
-					{%with btn_class='btn-primary btn-sm' btn_text='Edit Group' modal_id='edit_group_key_modal' model_heading='Edit Keyword Group' %}
+	<div class="col-sm-12 col-xl-12">
+		<div class="d-flex gap-2 code-menu">
+			<div class="flex-grow-1">
+				<div style="width: 122px;" class="nav nav-pills nav-custom nav-primary bg-white p-1 rounded mb-1" role="tablist">
+					<div class="nav-link active mr-1" data-bs-toggle="tab" href="#table-group-keyword" role="tab" aria-selected="true">Group</div>
+					<div class="nav-link" data-bs-toggle="tab" href="#table-keyword" role="tab" aria-selected="false" tabindex="-1">Keyword</div>
+				</div>
+			</div>
+			
+			<div class="p-1 bg-white rounded mb-1 flex-shrink-0">
+				{%with btn_class='btn-primary btn-sm' btn_text='Edit Group' modal_id='edit_group_key_modal' model_heading='Edit Keyword Group' %}
 					{%with model_type='modal-xl'%}
 						{% include 'elements/modals.html'%}
 					{%endwith%}
-					{%endwith%}
-				</div>
-				
-			</div>
-			<div class="card-body">
-				<div class="d-flex align-items-center flex-wrap mb-3 code-menu">
-					<div class="action flex-grow-1">
-						<div class="btn btn-danger btn-sm">Delete</div>
-						<div class="btn btn-success btn-sm">Onpage</div>
-					</div>
-					<div class="nav nav-pills nav-custom nav-primary bg-light p-1 rounded flex-shrink-0" role="tablist">
-						<div class="nav-link active" data-bs-toggle="tab" href="#table-group-keyword" role="tab" aria-selected="true">Group</div>
-						<div class="nav-link" data-bs-toggle="tab" href="#table-keyword" role="tab" aria-selected="false" tabindex="-1">Keyword</div>
-					</div>
-				</div>
-				
-				<div class="tab-content text-muted">
-					<div class="tab-pane active show" id="table-group-keyword" role="tabpanel">
-						<table class="table table-nowrap" id="group_keyword_table">
-							<thead class="table-light">
-								<tr>
-									<th scope="col">
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</th>
-									<th scope="col">No</th>
-									<th scope="col">Main key</th>
-									<th scope="col">Keyword count</th>
-									<th scope="col">Total volume</th>
-									<th scope="col">Content type</th>
-									<th scope="col">KD</th>
-									<th scope="col">Word count</th>
-									<th scope="col" style="width: 80px;">Action</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for i in range_10 %}
-								<tr>
-									<td>
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-										
-									</td>
-									<td>{{forloop.counter}}</td>
-									<td>Từ khóa chính {{forloop.counter}}</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
-										{%if i == 0 %}
-											<span class="badge bg-success">20</span>
-										{% elif i == 1 %}
-											<span class="badge bg-warning">40</span>
-										{% elif i == 2 %}
-											<span class="badge bg-danger">90</span>
-										{% endif %}
-									</td>
-									<td></td>
-									<td>
-										{%if i == 3 %}
-											<span class="btn btn-info badge form-control">View</span>
-										{%elif i == 5 %}
-											<button disabled class="btn btn-success badge form-control">
-												<div class="spinner-border spinner-grow" role="status" style="width:0.5rem; height: 0.5rem;">
-													<span class="visually-hidden"></span>
-												</div>
-												<div class="spinner-border spinner-grow" role="status" style="width:0.5rem; height: 0.5rem;">
-													<span class="visually-hidden"></span>
-												</div>
-												<div class="spinner-border spinner-grow" role="status" style="width:0.5rem; height: 0.5rem;">
-													<span class="visually-hidden"></span>
-												</div>
-											</button>
-										{% else %}
-											<span class="btn btn-success badge form-control">Onpage</span>
-										{% endif %}
-									</td>
-								</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-					</div>
-					<div class="tab-pane" id="table-keyword" role="tabpanel">
-						
-					</div>
-				</div>
+				{%endwith%}
 			</div>
 		</div>
+		<div class="tab-content">
+			<div class="card tab-pane active show" id="table-group-keyword" role="tabpanel">
+				<div class="card-header d-flex align-items-center flex-wrap gap-3">
+					<h2 class="card-title mb-0 flex-grow-1">Keyword grouping</h2>
+					<div class="flex-shrink-0">
+					</div>
+				</div>
+				<div class="card-body">
+					{% include 'app_market_explorer/elements/keyword_analysis_result__group_data.html'%}
+				</div>
+			</div>
+			<div class="card tab-pane" id="table-keyword" role="tabpanel">		
+				<div class="card-header">
+					<div class="card-title">Keyword list</div>
+				</div> 	
+				<div class="card-body"></div>
+			</div>
+		</div>
+		
 	</div>
-	
 </div>
 {% endblock %}
 

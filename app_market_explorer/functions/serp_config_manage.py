@@ -1,5 +1,6 @@
 from .. import models
 from app_api_connector.dataforseo import gg_api as DF_GG_API
+
 def serp_config(country, location, device, language_code, se_domain):
     serp_config_obj = models.SerpConfigModel.objects.filter(
             country_code=country,

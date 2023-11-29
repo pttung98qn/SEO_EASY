@@ -1,2 +1,11 @@
 
 /*# sourceMappingURL=custom.min.css.map */
+
+.white-tooltip {
+    --tb-tooltip-bg: var(--tb-white);
+    --tb-tooltip-color: var(--tb-black);
+    --tb-tooltip-border-radius:var(--tb-border-radius-lg)
+}
+.tooltip-inner a{
+    font-weight: 700;
+}

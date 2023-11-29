@@ -81,7 +81,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
     'django.contrib.sites',
     #Sample
     'apps',
@@ -97,7 +96,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'user_agents',
     #Library
-    
+
     # Apps
     'app_system',
     'app_api_connector',
@@ -159,7 +158,6 @@ TEMPLATES = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-
 WSGI_APPLICATION = 'MAIN.wsgi.application'
 ASGI_APPLICATION = 'MAIN.asgi.application'
 
@@ -174,6 +172,13 @@ if platform.system()=='Linux':
 else:
     HOME_URL = CSRF_TRUSTED_ORIGINS[0]
 
+if DEBUG == True:
+    INSTALLED_APPS.append('silk')
+    MIDDLEWARE.append('silk.middleware.SilkyMiddleware')
+    SILKY_AUTHENTICATION = True  # User must login
+    SILKY_AUTHORISATION = True  # User must have permissions
+    SILKY_PERMISSIONS = lambda user: user.is_superuser
+    SILKY_META = True
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -268,7 +273,6 @@ ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS =True
 SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_UNIQUE_EMAIL = True
 SOCIALACCOUNT_LOGIN_ON_GET = True
-
 
 SITE_ID = 1
 

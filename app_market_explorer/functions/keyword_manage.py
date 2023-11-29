@@ -25,6 +25,10 @@ def root_keyword_create(list_keyword):
 		)
 		list_new_obj.append(new_key)
 
-	models.KeywordRootModel.objects.bulk_create(list_new_obj)
-	return set_keyword
+	new_key_list = models.KeywordRootModel.objects.bulk_create(list_new_obj)
+	return {
+		'set_keyword':set_keyword,
+		'exist_key_qs':exist_key_qs,
+		'new_key_list':new_key_list
+	}
 			
