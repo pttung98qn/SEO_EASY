@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class DFAccountModel(models.Model):
@@ -27,10 +27,13 @@ class DFRequestLog(models.Model):
 class KeywordResearchRequest(models.Model):
 	order = models.IntegerField()
 	offset = models.IntegerField()
+	offset_token = models.CharField(max_length=1024, null=True, blank=True)
+	copy = models.BooleanField(default=False)
 
 	cost = models.FloatField(null=True, blank=True)
 	res_data = models.JSONField(null=True, blank=True)
 	status = models.CharField(default='created', max_length=15) #created / pushed / done / error
 
+	creator = models.ForeignKey(User, on_delete=models.CASCADE)
 	create_time = models.DateTimeField(auto_now_add=True)
 	turnarround_time = models.IntegerField(null=True, blank=True)

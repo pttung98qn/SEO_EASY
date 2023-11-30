@@ -23,7 +23,14 @@ class VolumeOrderAdmin(admin.ModelAdmin):
 	list_filter = ['from_action', 'id_main', 'get_from_date', 'creator']
 	date_hierarchy = 'create_time'
 
+class KeywordResearchOrderAdmin(admin.ModelAdmin):
+	list_display = ['keyword','config','status','request_num','total_count','total_result','total_cost','total_credit','creator','create_time']
+	search_fields = ['keyword']
+	list_filter = ['config', 'status', 'creator']
+	date_hierarchy = 'create_time'
+
 admin.site.register(models.SerpConfigModel, SerpConfigAdmin)
 admin.site.register(models.KeywordAnalysisModel, KeywordAnalysisAdmin)
 admin.site.register(models.KeywordRootModel, KeywordRootAdmin)
 admin.site.register(models.VolumeOrderModel, VolumeOrderAdmin)
+admin.site.register(models.KeywordResearchOrderModel, KeywordResearchOrderAdmin)

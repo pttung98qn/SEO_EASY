@@ -12,15 +12,19 @@ DEVICE_OPTION = [('mb','Mobile'), ('dk','Desktop')]
 
 class SerpConfigModel(models.Model):
 	country_code = models.CharField(max_length=10 ,choices=COUNTRY_OPTION)
-	location_code = models.CharField(max_length=10, null=True, blank=True, choices=LOCATION_OPTION)
-	language_code = models.CharField(max_length=10, choices=LANGUAGE_OPTION)
+	location_code = models.CharField(max_length=10, choices=LOCATION_OPTION, null=True, blank=True)
+	language_code = models.CharField(max_length=10, choices=LANGUAGE_OPTION, null=True, blank=True)
 	device = models.CharField(max_length=5, choices=DEVICE_OPTION)
 	se_domain = models.CharField(max_length=25, choices=SE_DOMAIN_OPTION)
 
 	class Meta:
 		verbose_name = 'Serp Config'
 	def __str__(self):
-		return self.country_code
+		country = self.get_country_code_display()
+		location = self.location_code if self.location_code else ''
+		language = self.language_code if self.language_code else ''
+		se_domain = self.se_domain.replace('google.','')
+		return f'{country}_{location}_{language}_{self.device}_{se_domain}'
 	
 class KeywordAnalysisModel(models.Model):
 	name = models.CharField(max_length=125)
@@ -40,13 +44,16 @@ class KeywordAnalysisModel(models.Model):
 		return self.name
 
 class Keyword_KA_Model(models.Model):
+	keyword = models.CharField(max_length=125)
 	analytics_group = models.ForeignKey(KeywordAnalysisModel, on_delete=models.CASCADE)
 
 	volume = models.IntegerField(null=True, blank=True)
+	trend = models.IntegerField(null=True, blank=True)
+	volume_history = models.JSONField(null=True, blank=True)
 	serp = models.IntegerField(null=True, blank=True)
 	kd = models.IntegerField(null=True, blank=True)
-	volume_history = models.JSONField(null=True, blank=True)
-	root = models.CharField(max_length=125)
+	avr_cpc = models.FloatField(null=True, blank=True)
+	
 
 	last_update_kd = models.DateTimeField(null=True, blank=True)
 	last_update_volume = models.DateTimeField(null=True, blank=True)
@@ -72,7 +79,9 @@ class KeywordVolumeModel(models.Model):
 	keyword = models.ForeignKey(KeywordRootModel, on_delete=models.CASCADE)
 	config = models.ForeignKey(SerpConfigModel, on_delete=models.PROTECT)
 	volume = models.IntegerField(null=True, blank=True)
-	vol_history = models.JSONField(null=True, blank=True)
+	volume_history = models.JSONField(null=True, blank=True)
+	trend = models.IntegerField(null=True, blank=True)
+	avr_cpc = models.FloatField(null=True, blank=True)
 	on_update = models.BooleanField(default=False)
 	udpate_time = models.DateTimeField(auto_now=True)
 	create_time = models.DateTimeField(auto_now_add=True)
@@ -84,7 +93,7 @@ class KeywordVolumeModel(models.Model):
 class KeywordKDModel(models.Model):
 	keyword = models.ForeignKey(KeywordRootModel, on_delete=models.CASCADE)
 	config = models.ForeignKey(SerpConfigModel, on_delete=models.PROTECT)
-	KD = models.IntegerField()
+	kd = models.IntegerField(null=True, blank=True)
 	on_update = models.BooleanField(default=False)
 	udpate_time = models.DateTimeField(auto_now=True)
 	create_time = models.DateTimeField(auto_now_add=True)
@@ -199,14 +208,16 @@ class KeywordResearchOrderModel(models.Model):
 		return f'{self.keyword}__{self.config.id}'
 	
 class Keyword_RS_Model(models.Model):
-	keyword = models.ForeignKey(KeywordRootModel, on_delete=models.CASCADE)
+	keyword = models.CharField(max_length=125)
 	order = models.ForeignKey(KeywordResearchOrderModel, on_delete=models.CASCADE)
-	offset = models.IntegerField(default=0)
+	request = models.IntegerField(default=0)
 	
 	volume = models.IntegerField(null=True, blank=True)
+	volume_history = models.JSONField(null=True, blank=True)
+	trend = models.IntegerField(null=True, blank=True)
 	serp = models.IntegerField(null=True, blank=True)
 	kd = models.IntegerField(null=True, blank=True)
-	volume_history = models.JSONField(null=True, blank=True)
+	avr_cpc = models.FloatField(null=True, blank=True)
 
 	create_time = models.DateTimeField(auto_now_add=True)
 	

@@ -1,6 +1,6 @@
-from django.shortcuts import render
 from django.views import View
 from django.shortcuts import redirect, render
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -11,7 +11,7 @@ from django.http import Http404
 
 from app_api_connector.dataforseo import gg_api as DF_GG_API
 from .forms import KeywordResearchForm
-from .functions import serp_config_manage
+from .functions import serp_config_manage, keyword_research_process
 from . import models
 
 import time
@@ -38,9 +38,9 @@ class KeywordResearchView(LoginRequiredMixin, View):
 		filter_exclude = form.cleaned_data['filter_exclude']
 		filter_volume_min = form.cleaned_data['filter_volume_min']
 		filter_volume_max = form.cleaned_data['filter_volume_max']
-
-		serp_config = serp_config_manage.keyword_analytics_config(country_code, language_code)
-
+		
+		serp_config = serp_config_manage.keyword_research_config(country_code, language_code)
+		
 		new_order = models.KeywordResearchOrderModel.objects.create(
 			keyword = keyword,
 			config = serp_config,
@@ -50,8 +50,11 @@ class KeywordResearchView(LoginRequiredMixin, View):
 			filter_volume_max = filter_volume_max,
 			creator = request.user
 		)
-		return redirect(reverse('keyword_research_result', args=[new_order.id] ))
+		keyword_research_process.order_first_push(new_order, serp_config)
+		return redirect(reverse('keyword_research_result', args=[new_order.id]))
 
+
+from app_api_connector import models as api_c_models
 @login_required
 def keyword_research_result_view(request, id):
 	try:
@@ -60,6 +63,9 @@ def keyword_research_result_view(request, id):
 		raise Http404()
 	if obj.creator != request.user:
 		raise PermissionDenied
+	
+	request_list = api_c_models.KeywordResearchRequest.objects.filter(order=obj.id).first()
+	keyword_research_process.keyword_result_process(obj, request_list)
 	context = {
 		'obj':obj,
 		'country_data': DF_GG_API.COUNTRY_LIST,

@@ -1,11 +1,11 @@
 import json, requests
+from requests.auth import HTTPBasicAuth
 from pathlib import Path
 from django.conf import settings
 
 BASE_DIR = Path(__file__).resolve().parent
 
-default_acount = 'pmm23.gasistant@gmail.com',
-default_auth = 'd7146b960c5d44da'
+default_auth = HTTPBasicAuth('pmm23.gasistant@gmail.com', 'd7146b960c5d44da')
 
 with open(BASE_DIR/'gg_language.json', 'r') as f:
 	FULL_LANGUAGE = json.load(f)['data']
@@ -107,7 +107,6 @@ def serp_post(order_data, domain, location, language, device,
 		index = index+1
 
 	res = requests.post(end_point, json = post_data, auth = default_auth)
-
 	return res
 
 def volume_api(order, keyword_list, tag, location_code, date_from):
@@ -164,7 +163,7 @@ def keyword_suggestions(keyword, include_seed_keyword=True, exact_match=False, l
 	end_point = "https://api.dataforseo.com/v3/dataforseo_labs/google/keyword_suggestions/live"
 	if language_code and language_code!='':
 		language_code = None
-	post_data = dict()
+	post_data = dict(())
 	post_data[0] = dict(
 		keyword=keyword,
 		include_seed_keyword = include_seed_keyword,
@@ -180,6 +179,7 @@ def keyword_suggestions(keyword, include_seed_keyword=True, exact_match=False, l
 	
 	for i in range(2):
 		res = requests.post(end_point, json = post_data, auth = default_auth)
+		print(res)
 		if res.status_code==200:
 			return res
 	return res

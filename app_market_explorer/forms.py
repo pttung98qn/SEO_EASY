@@ -34,7 +34,7 @@ class KeywordResearchForm(forms.Form):
             key = key.strip()
             if key !='' and len(key)<=125:
                 clean_keys.append(key)
-        return clean_keys[:5]
+        return ','.join(clean_keys[:5])
     def clean_filter_exclude(self):
         data = self.cleaned_data['filter_exclude']
         data_list = data.replace(',','\n').split('\n')
@@ -43,5 +43,5 @@ class KeywordResearchForm(forms.Form):
             key = key.strip()
             if key !='' and len(key)<=125:
                 clean_keys.append(key)
-        return clean_keys[:5]
+        return ','.join(clean_keys[:5])
     

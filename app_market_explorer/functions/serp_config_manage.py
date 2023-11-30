@@ -26,3 +26,10 @@ def keyword_analytics_config(country, language_code):
     se_domain = 'google.com'
     location = None
     return serp_config(country, location, device, language_code, se_domain)
+
+def keyword_research_config(country, language_code):
+    device = 'mb'
+    se_domain = 'google.com'
+    location = None
+    language_code = language_code if language_code!='' else None
+    return serp_config(country, location, device, language_code, se_domain)
